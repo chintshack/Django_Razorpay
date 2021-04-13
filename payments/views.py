@@ -29,7 +29,7 @@ import razorpay
 # razorpay api
 #=====================================================================================
 
-client = razorpay.Client(auth=("rzp_test_3rwBYBLYRPHJWd", "YEJHecBxRaXbusMTPxuykTZ4"))
+client = razorpay.Client(auth=("rzp_test_ZqaMLvbSXtnL9Y", "kZNfAThM5a7NLtt4NkqwDKRU"))
 
 
 #=====================================================================================
@@ -298,20 +298,21 @@ def View_Create_Order(request):
 
             # data that'll be send to the razorpay for
             context['order_id'] = order_id
-            
+
             print('order_Status ====> ', order_id)
             return render(request, 'confirm_order.html', context, {'data': results_studentdetails})
+            #return render(request, 'confirm_order.html', context)
+
 
 
         # print('\n\n\nresponse: ',response, type(response))
     return HttpResponse('<h1>Error in  create order function</h1>')
 
-
 #=====================================================================================
 # Payment Page Summary 
 #=====================================================================================
 def View_Payment_Status(request):
-
+    print('===> Inside Payment Status <====')
     response = request.POST
     print('response======>', response['razorpay_payment_id'])
     print('response======>', response['razorpay_order_id'])
@@ -390,6 +391,8 @@ def View_Admin_Logout(request):
 
 @permission_required('is_superuser',  login_url='admin_login')
 def students(request):
+    print('===View All Students Details====')
+
     users_all = User.objects.all()
     students = StudentFeesDetail.objects.all().order_by('-id')[0]
 
@@ -422,16 +425,17 @@ def students(request):
 
 
 def View_All_Transaction(request):
-
+    # print('=== View_All_Transaction ====')
     resp = client.payment.fetch_all()
-    print('----ALL TRANSACTIONS_---------')
+
+    
     details = resp['items']
-    print(details)
+    # print(details)
     # To convert time in normal format
     for time in details:
         print()    
         store_unix_time = datetime.datetime.fromtimestamp(int(time['created_at'])).strftime('%d-%m-%Y %H:%M:%S')
-        print(store_unix_time)
+        # print(store_unix_time)
     
     
     # For card details extraction
