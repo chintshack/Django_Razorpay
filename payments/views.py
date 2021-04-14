@@ -29,7 +29,7 @@ import razorpay
 # razorpay api
 #=====================================================================================
 
-client = razorpay.Client(auth=("rzp_test_ZqaMLvbSXtnL9Y", "kZNfAThM5a7NLtt4NkqwDKRU"))
+client = razorpay.Client(auth=("", ""))
 
 
 #=====================================================================================
